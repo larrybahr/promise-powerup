@@ -1,0 +1,52 @@
+{
+  "name": "promise-powerup",
+  "description": "Giving more power to your JavaScript promises!",
+  "version": "0.0.1",
+  "author": {
+    "name": "Larry Bahr",
+    "url": "http://www.LB3Tech.net/"
+  },
+  "browserslist": [
+    "> 0.2% in US",
+    "since 2017-12-01",
+    "not dead"
+  ],
+  "contributors": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.5.4",
+    "@babel/plugin-proposal-class-properties": "7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.5.4",
+    "@babel/preset-env": "7.5.4",
+    "@babel/preset-typescript": "7.3.3",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
+    "rollup": "1.17.0",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-commonjs": "10.0.1",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "typescript": "3.5.3"
+  },
+  "homepage": "https://github.com/larrybahr/promise-powerup",
+  "keywords": [
+    "future",
+    "promise",
+    "promises",
+    "then"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larrybahr/promise-powerup.git"
+  },
+  "scripts": {
+    "build": "npm run build:types && npm run build:js",
+    "build:js": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly",
+    "pre-commit": "npx fixpack",
+    "test": "nyc mocha",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch"
+  }
+}
