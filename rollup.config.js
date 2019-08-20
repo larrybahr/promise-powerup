@@ -8,7 +8,7 @@ const extensions = [
   '.js', '.jsx', '.ts', '.tsx',
 ];
 
-const name = 'RollupTypeScriptBabel';
+const NAME = 'promisePowerup';
 
 export default {
   input: './src/index.ts',
@@ -28,18 +28,12 @@ export default {
     babel({ extensions, include: ['src/**/*'] }),
   ],
 
-  output: [{
-    file: path.join(DIST_DIR, 'rollup-plugin-babel.cjs.js'),
-    format: 'cjs',
-  }, {
-    file: path.join(DIST_DIR, 'rollup-plugin-babel.es.js'),
-    format: 'es',
-  }, {
-    file: path.join(DIST_DIR, 'rollup-plugin-babel.iife.js'),
-    format: 'iife',
-    name,
-
-    // https://rollupjs.org/guide/en#output-globals-g-globals
-    globals: {},
-  }],
+  output: [
+    {
+      file: path.join(DIST_DIR, NAME + '.js'),
+      format: 'umd',
+      name: NAME,
+      sourcemap: true
+    }
+  ],
 };

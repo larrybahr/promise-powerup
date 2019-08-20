@@ -1,0 +1,39 @@
+<script src="../dist/promisePowerup.js"></script>
+<script>
+    promisePowerup.NamedPromise.Get(['test']).then((result) =>
+	{
+		console.log('1. named promise resolved with - ' + result);
+	})
+	.catch((err) =>
+	{
+		console.log('1. named promise failed ' + err);
+    });
+
+    let test = new promisePowerup.NamedPromise(function (resolve)
+	{
+        setTimeout(() =>
+        {
+            resolve('test value')
+        }, 200);
+        return;
+    });
+    test.name = 'test';
+
+    test.then((result) =>
+	{
+		console.log('2. named promise resolved with - ' + result);
+	})
+	.catch((err) =>
+	{
+		console.log('2. named promise failed ' + err);
+	});
+
+    promisePowerup.NamedPromise.Get(['test']).then((result) =>
+	{
+		console.log('3. named promise resolved with - ' + result);
+	})
+	.catch((err) =>
+	{
+		console.log('3. named promise failed ' + err);
+	});
+</script>

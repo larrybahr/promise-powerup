@@ -41,8 +41,9 @@
     "url": "https://github.com/larrybahr/promise-powerup.git"
   },
   "scripts": {
+    "build:watch": "rollup --config --watch",
     "build": "npm run build:types && npm run build:js",
-    "build:js": "rollup -c",
+    "build:js": "rollup --config",
     "build:types": "tsc --emitDeclarationOnly",
     "pre-commit": "npx fixpack",
     "test": "nyc mocha",
