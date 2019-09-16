@@ -19,6 +19,8 @@ declare namespace NamedPromise
  */
 export class NamedPromise<T> extends Promise<T>
 {
+	private _name: string | undefined;
+
 	/**
 	 * Holds all the named promise info
 	 */
@@ -31,15 +33,16 @@ export class NamedPromise<T> extends Promise<T>
 	constructor(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void)
 	{
 		super(executor);
+		this._name = undefined;
 		return;
 	}
 
 	/**
 	 * name of the promise
 	 */
-	get name(): string
+	get name(): string | undefined
 	{
-		return this.name;
+		return this._name;
 	}
 	set name(name)
 	{
@@ -52,6 +55,8 @@ export class NamedPromise<T> extends Promise<T>
 		{
 			throw new Error('Promise with name ' + name + ' already exists');
 		}
+
+		this._name = name;
 
 		if ('object' !== typeof (NamedPromise.namedPromiseStore[name]))
 		{

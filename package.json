@@ -19,12 +19,14 @@
     "@babel/plugin-proposal-object-rest-spread": "7.5.4",
     "@babel/preset-env": "7.5.4",
     "@babel/preset-typescript": "7.3.3",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "rollup": "1.17.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.0.1",
     "rollup-plugin-node-resolve": "5.2.0",
+    "source-map-support": "^0.5.13",
+    "ts-node": "^8.3.0",
     "typescript": "3.5.3"
   },
   "homepage": "https://github.com/larrybahr/promise-powerup",
@@ -35,10 +37,20 @@
     "then"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "./dist/promisePowerup.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/larrybahr/promise-powerup.git"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.test.js"
+    ]
   },
   "scripts": {
     "build:watch": "rollup --config --watch",
@@ -46,7 +58,7 @@
     "build:js": "rollup --config",
     "build:types": "tsc --emitDeclarationOnly",
     "pre-commit": "npx fixpack",
-    "test": "nyc mocha",
+    "test": "nyc mocha --opts='./test/mocha.opts' test/**/*.test.js",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
   }

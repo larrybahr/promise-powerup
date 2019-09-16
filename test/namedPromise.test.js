@@ -15,6 +15,22 @@ describe('Named Promises', () =>
 		return Promise.resolve();
 	});
 
+	it('should be able to set and get the name', function ()
+	{
+		const PROMISE_NAME = Math.random().toString();
+		let nameResult;
+		let tempPromise = new promisePowerup.NamedPromise((resolve) => { resolve(); });
+
+		tempPromise.name = PROMISE_NAME;
+		nameResult = tempPromise.name;
+		if (PROMISE_NAME !== nameResult)
+		{
+			throw new Error("wrong name. Expected " + PROMISE_NAME + " but got " + nameResult);
+		}
+
+		return Promise.resolve();
+	});
+
 	it('Named promise should resolve with the correct result', function ()
 	{
 		return new Promise(function (testResolve, testReject)
@@ -54,6 +70,75 @@ describe('Named Promises', () =>
 				return;
 			}, TIME_TO_WAIT_UNTIL_RESOLVE * 2);
 		});
+	});
+
+	it('should reject with the correct result', function ()
+	{
+		return new Promise(function (testResolve, testReject)
+		{
+			const PROMISE_NAME = Math.random().toString();
+			let rejectValue = Math.random();
+			let tempPromise;
+
+			tempPromise = new promisePowerup.NamedPromise(function (resolve, reject)
+			{
+				setTimeout(() =>
+				{
+					reject(rejectValue);
+				}, TIME_TO_WAIT_UNTIL_RESOLVE);
+				return;
+			});
+			tempPromise.name = PROMISE_NAME;
+
+			tempPromise
+				.then(function (result)
+				{
+					testReject(new Error('Should have rejected'));
+					return;
+				})
+				.catch(function (err)
+				{
+					if (rejectValue !== err)
+					{
+						testReject(new Error('Rejected with wrong value. Expected ' + rejectValue + ' but got ' + err));
+						return;
+					}
+					testResolve();
+					return;
+				});
+
+			setTimeout(() =>
+			{
+				testReject(new Error('Test took too long'));
+				return;
+			}, TIME_TO_WAIT_UNTIL_RESOLVE * 2);
+		});
+	});
+
+	it('should not let a name be used more than once', function ()
+	{
+		let errored = false;
+		const PROMISE_NAME = Math.random().toString();
+		let tempPromise = new promisePowerup.NamedPromise((resolve) => { resolve(); });
+
+		tempPromise.name = PROMISE_NAME;
+
+		tempPromise = new promisePowerup.NamedPromise((resolve) => { resolve(); });
+
+		try
+		{
+			tempPromise.name = PROMISE_NAME;
+		}
+		catch(err)
+		{
+			errored = true;
+		}
+
+		if (false === errored)
+		{
+			throw new Error('Let the name ' + PROMISE_NAME + ' be used more than once');
+		}
+		return Promise.resolve();
 	});
 
 	it('GetNamedPromise should wait until the named promise resolves', function ()

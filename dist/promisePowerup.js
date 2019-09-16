@@ -192,6 +192,10 @@
       _classCallCheck(this, NamedPromise);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(NamedPromise).call(this, executor));
+
+      _defineProperty(_assertThisInitialized(_this), "_name", void 0);
+
+      _this._name = undefined;
       return _possibleConstructorReturn(_this);
     }
     /**
@@ -202,7 +206,7 @@
     _createClass(NamedPromise, [{
       key: "name",
       get: function get() {
-        return this.name;
+        return this._name;
       },
       set: function set(name) {
         // Check and normalize parameters
@@ -213,6 +217,8 @@
         if (NamedPromise.IsCreated(name)) {
           throw new Error('Promise with name ' + name + ' already exists');
         }
+
+        this._name = name;
 
         if ('object' !== _typeof(NamedPromise.namedPromiseStore[name])) {
           NamedPromise.CreateNamedPromise(name);
